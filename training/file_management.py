@@ -87,6 +87,15 @@ def loadImages(numberOfFiles):
 def writeDetectedKeypoints(index, keypoints):
 
     with open('database/%s.manual.keypoints' % index, 'w') as file:
+
         for keypoint in keypoints:
             file.write('%s\n' % keypoint[0])
             file.write('%s\n' % keypoint[1])
+
+
+def writeCropPoints(index, points):
+
+    with open('database/%s.face' % index, 'w') as file:
+
+        for point in points:
+            file.write('%s\n' % point)

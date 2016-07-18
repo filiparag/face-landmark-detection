@@ -49,7 +49,7 @@ def locateFace(image):
     eyes = cv2eyesCascade.detectMultiScale(image)
     if len(eyes) is 1:
         ex, ey, ew, eh = eyes[0]
-        image = image[ey * 0.85:(ey+eh)*1.6, ex:ex+ew]
+        image = image[ey * 0.85:(ey+eh)*1.8, ex:ex+ew]
         return image, int(ex), int(ey * 0.85)
     else:
         return -1, -1, -1
@@ -89,7 +89,7 @@ def locateMouth(image, pupils, cropLeft, cropTop):
 
 def locateKeypoints():
 
-    images = fmng.loadImages(592)
+    images = fmng.loadImages(593)
     globalError = []
 
     rejectedImages = 0
@@ -108,6 +108,7 @@ def locateKeypoints():
             mouth = locateMouth(currentImage, pupils, cropLeft, cropTop)
             keypoints = [pupils[0], pupils[1], mouth]
             fmng.writeDetectedKeypoints(index, keypoints)
+            fmng.writeCropPoints(index, [cropLeft, cropTop, len(currentImage[0]), len(currentImage)])
             localError = error.keypointDetectionErrorRate(image, index, keypoints)
             if localError[0] <= 10 and localError[1] <= 10 and localError[2] <= 10:
                 globalError.append(localError)
