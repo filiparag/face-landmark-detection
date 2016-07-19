@@ -1,6 +1,6 @@
 function regions = regions_of_interest(landmarks, image)
 
-	region_size = 32;
+	region_size = 36;
 
 	regions = zeros(region_size + 1, region_size + 1, 20);
 

@@ -6,6 +6,12 @@ function result = landmark_detection()
 
 	roi = regions_of_interest(landmarks, image);
 
-	patches = extract_patches(roi(:, :, 10));
+	patches = extract_patches(roi(:, :, 7));
+
+	patches = extract_patches(roi(:, :, 11));
+
+	patches = extract_patches(roi(:, :, 16));
+
+	patches = extract_patches(roi(:, :, 18));
     
 end
