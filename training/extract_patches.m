@@ -14,8 +14,7 @@ function [patches, response] = extract_patches(region)
 		for x = -1 : 1
 			it = it + 1;
 			patches(:, :, it) = region(region_center - half_patch + y : region_center + half_patch + y, region_center - half_patch + x : region_center + half_patch + x);
-			resp(1, 1 : 49) = 1;
-			response = [response resp];
+			response = [response 1];
 		end
 	end
 
@@ -28,8 +27,7 @@ function [patches, response] = extract_patches(region)
 		end
 		it = it + 1;
 		patches(:, :, it) = region(y - half_patch : y + half_patch, x - half_patch : x + half_patch);
-		resp(1, 1 : 49) = -1;
-		response = [response resp];
+		response = [response -1];
 	end
 
 	for n = 1 : 8
@@ -41,8 +39,7 @@ function [patches, response] = extract_patches(region)
 		end
 		it = it + 1;
 		patches(:, :, it) = region(y - half_patch : y + half_patch, x - half_patch : x + half_patch);
-		resp(1, 1 : 49) = -1;
-		response = [response resp];
+		response = [response -1];
 	end
 
 end

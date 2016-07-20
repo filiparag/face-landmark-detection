@@ -1,19 +1,36 @@
 function result = landmark_detection()
 
-	[keypoints image face] = import_face(250);
-
-	landmarks = import_landmarks(250);
-
-	roi = regions_of_interest(landmarks, image);
-
 	for r = 1 : 1 %20
-		[bank, response] = region_bank(roi(:, :, r));
-  end
 
-  bank = real(bank);
+		roi_bank = [];
+		roi_response = [];
 
-	gentle = fitensemble(bank, response, 'GentleBoost', 5, 'Tree');
+		for f = 1 : 1 % 592
 
-	% Yfit = predict(gentle, elements)
+			[keypoints image] = import_face(f);
+
+			landmarks = import_landmarks(f);
+
+			roi = regions_of_interest(landmarks, image);
+
+			[bank, response] = region_bank(roi(:, :, r));
+
+		  bank = real(bank);
+		  bank = permute(bank, [2 1]);
+
+		  roi_bank((f - 1) * 25 + 1 : f * 25, :) = bank;
+		  roi_response = [roi_response response];
+		
+		[r f]
+
+		end
+
+		roi_gentleboost = fitensemble(roi_bank, roi_response, 'GentleBoost', 500, 'Tree');
+
+		gentleboosters{r} = roi_gentleboost;
+
+	end
+
+	save('training', 'gentleboosters');
   
 end

@@ -1,4 +1,4 @@
-function [points, image, face] = import_face(fileIndex)
+function [points, image] = import_face(fileIndex)
 
 	fid = fopen(['database/' int2str(fileIndex) '.keypoints']);
 
@@ -17,15 +17,5 @@ function [points, image, face] = import_face(fileIndex)
 	if(size(size(image))) == [1 3]
 		image = rgb2gray(image);
 	end
-
-	fid = fopen(['database/' int2str(fileIndex) '.face']);
-
-	face = [];
-
-	for it = 1 : 4
-		face = [face str2num(fgetl(fid))];
-	end
-
-	fclose(fid);
 
 end
