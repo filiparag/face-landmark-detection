@@ -1,11 +1,11 @@
 function result = landmark_detection()
 
-	for r = 1 : 1 %20
+	for r = 1 : 20 %20
 
 		roi_bank = [];
 		roi_response = [];
 
-		for f = 1 : 1 % 592
+		for f = 1 : 5 % 592
 
 			[keypoints image] = import_face(f);
 
@@ -20,17 +20,15 @@ function result = landmark_detection()
 
 		  roi_bank((f - 1) * 25 + 1 : f * 25, :) = bank;
 		  roi_response = [roi_response response];
-		
-		[r f]
 
 		end
 
 		roi_gentleboost = fitensemble(roi_bank, roi_response, 'GentleBoost', 500, 'Tree');
 
-		gentleboosters{r} = roi_gentleboost;
+		r
+
+		save(['training_roi_' num2str(r)], 'roi_gentleboost');
 
 	end
-
-	save('training', 'gentleboosters');
   
 end
