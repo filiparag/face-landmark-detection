@@ -50,7 +50,7 @@ def locateFace(image):
     if len(eyes) is 1:
         ex, ey, ew, eh = eyes[0]
         image = image[ey * 0.85:(ey+eh)*1.8, ex:ex+ew]
-        return image, int(ex), int(ey * 0.85)
+        return image, int(ex), int(e`y * 0.85)
     else:
         return -1, -1, -1
 

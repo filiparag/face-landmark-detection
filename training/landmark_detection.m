@@ -6,12 +6,14 @@ function result = landmark_detection()
 
 	roi = regions_of_interest(landmarks, image);
 
-	patches = extract_patches(roi(:, :, 7));
+	for r = 1 : 1 %20
+		[bank, response] = region_bank(roi(:, :, r));
+  end
 
-	patches = extract_patches(roi(:, :, 11));
+  bank = real(bank);
 
-	patches = extract_patches(roi(:, :, 16));
+	gentle = fitensemble(bank, response, 'GentleBoost', 5, 'Tree');
 
-	patches = extract_patches(roi(:, :, 18));
-    
+	% Yfit = predict(gentle, elements)
+  
 end
