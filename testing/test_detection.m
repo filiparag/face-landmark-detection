@@ -2,7 +2,7 @@ function result = test_detection()
 
 	addpath('../training/');
 
-	load('../training/training_roi_10.mat');
+	load('../training/boosters/training_roi_5.mat');
 
 	[keypoints image] = import_face(102);
 
@@ -10,16 +10,26 @@ function result = test_detection()
 
 	wavelengths = [2 4 6 8 10 12];
 	orientations = [0 22.5 45 67.5 90 112.5 135 157.5];
+	patch_size = 13;
 
-	bank = gabor_bank(roi{10}, 13, wavelengths, orientations, 0, 1, 0.5);
-	bank(:, :, 49) = roi{10};
+	bank = gabor_bank(roi{5}, patch_size, wavelengths, orientations, 0, 1, 0.5);
+	bank(:, :, 49) = roi{5};
 
-	bank = bank(1 : 13, 1 : 13, :);
+	[bankHeight, bankWidth, bankDepth] = size(bank);
 
-	bank = real(bank);
+	predictions = [];
 
-	bank = reshape(bank, [1 8281]);
+	for y = ceil(patch_size / 2) + 1 : bankHeight - ceil(patch_size / 2)
+		for x = ceil(patch_size / 2) + 1 : bankWidth - ceil(patch_size / 2)
+			patch_bank = bank(y - 6 : y + 6, x - 6 : x + 6, :);
+			patch_bank = real(patch_bank);
+			patch_bank = reshape(patch_bank, [1 8281]);
+			predictions = [predictions predict(roi_gentleboost, patch_bank)];
+			[x y]
+		end		
+	end
 
-	predict(roi_gentleboost, bank)
-    
+	predictions
+	max(predictions)
+
 end

@@ -1,4 +1,5 @@
 training/database/
+training/boosters/
+training/processed/
 training/*.pyc
 database/
-training/training_roi_*
