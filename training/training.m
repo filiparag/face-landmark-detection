@@ -7,7 +7,7 @@ function [] = training()
 
 		['Training: ' num2str(r) ' / 20']
 
-		roi_gentleboost = fitensemble(roi_bank, roi_response, 'GentleBoost', 500, 'Tree');
+		roi_gentleboost = fitensemble(roi_bank(1:10250, :), roi_response(1:10250), 'GentleBoost', 500, 'Tree');
 
 		save(['boosters/training_roi_' num2str(r)], 'roi_gentleboost');
 
