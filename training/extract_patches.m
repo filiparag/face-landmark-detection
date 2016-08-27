@@ -16,11 +16,11 @@ function [patches, response] = extract_patches(region)
 			patches(:, :, it) = region(region_center - half_patch + y : region_center + half_patch + y, region_center - half_patch + x : region_center + half_patch + x);
 			response = [response 1];
 		end
-	end
-
+    end
+    
 	for n = 1 : 8
 		distance = 0;
-		while distance > 3 | distance < 2
+		while distance > 6 || distance < 3
 			x = (half_patch) + round(rand() * (region_size - patch_size));
 			y = (half_patch) + round(rand() * (region_size - patch_size));
 			distance = sqrt((region_center - x) ^ 2 + (region_center - y) ^ 2);
@@ -28,18 +28,22 @@ function [patches, response] = extract_patches(region)
 		it = it + 1;
 		patches(:, :, it) = region(y - half_patch : y + half_patch, x - half_patch : x + half_patch);
 		response = [response -1];
-	end
+    end
 
+    edge_intensity = imfilter(region, fspecial('sobel'));
+    
 	for n = 1 : 8
 		distance = 0;
-		while distance < 3 & (x == 0 | y == 0)
+        x = 1;
+        y = 1;
+		while distance < 5 || (x == 0 || y == 0) || edge_intensity(y * x + x) > 0
 			x = (half_patch) + round(rand() * (region_size - patch_size));
 			y = (half_patch) + round(rand() * (region_size - patch_size));
 			distance = sqrt((region_center - x) ^ 2 + (region_center - y) ^ 2);
-		end
+        end
 		it = it + 1;
 		patches(:, :, it) = region(y - half_patch : y + half_patch, x - half_patch : x + half_patch);
 		response = [response -1];
-	end
+    end
 
 end

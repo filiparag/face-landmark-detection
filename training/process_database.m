@@ -1,13 +1,13 @@
 function [] = process_database()
 
-	for r = 1 : 20 % 20
+	for r = 8 : 8 % 20
 
         ['Processing: ' num2str(r) ' / 20']
 
 		roi_bank = [];
 		roi_response = [];
 
-		for f = 1 : 593 % 410 / 593
+		for f = 111 : 111 % 410 / 593
 
 			[keypoints image] = import_face(f - 1);
 
@@ -25,8 +25,8 @@ function [] = process_database()
 
 		end
 
-		save(['processed/training_feature_vector_' num2str(r)], 'roi_bank');
-		save(['processed/training_truth_' num2str(r)], 'roi_response');
+		%%%save(['processed/training_feature_vector_' num2str(r)], 'roi_bank');
+		%%%save(['processed/training_truth_' num2str(r)], 'roi_response');
 
 	end
 
