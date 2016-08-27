@@ -2,7 +2,7 @@ function [] = process_database()
 
 	for r = 1 : 20 % 20
 
-		['Processing: ' num2str(r) ' / 20']
+        ['Processing: ' num2str(r) ' / 20']
 
 		roi_bank = [];
 		roi_response = [];
